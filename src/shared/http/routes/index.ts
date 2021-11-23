@@ -3,6 +3,6 @@ import { productsRouter } from "@modules/products/routes/products.routes";
 
 const routes = Router();
 
-routes.get("/products", productsRouter);
+routes.use("/products", productsRouter);
 
 export { routes };
