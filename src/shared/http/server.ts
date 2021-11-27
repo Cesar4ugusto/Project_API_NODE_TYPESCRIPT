@@ -6,11 +6,13 @@ import cors from "cors";
 import { routes } from "./routes";
 import AppError from "@shared/errors/AppError";
 import { errors } from "celebrate";
+import multerConfig from "@config/multerConfig";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/files", express.static(multerConfig.dest));
 app.use(routes);
 
 app.use(errors());

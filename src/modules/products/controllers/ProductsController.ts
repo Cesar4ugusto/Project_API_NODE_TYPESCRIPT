@@ -6,7 +6,7 @@ import ShowProductService from "../services/ShowProductService";
 import UpdateteProductService from "../services/UpdateProductService";
 
 export default class ProductsController {
-    public async index(req: Request, res: Response) {
+    public async index(req: Request, res: Response): Promise<Response> {
         const listProducts = new ListProductService();
         const products = await listProducts.init();
         return res.json(products);
@@ -34,7 +34,7 @@ export default class ProductsController {
         return res.json(products);
     }
 
-    public async delete(req: Request, res: Response) {
+    public async delete(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
         const deleteProducts = new DeleteProductService();
         await deleteProducts.init({ id });
