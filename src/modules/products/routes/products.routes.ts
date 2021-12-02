@@ -1,12 +1,14 @@
 import { Router } from "express";
 import ProductsController from "../controllers/ProductsController";
 import { celebrate, Joi, Segments } from "celebrate";
+import auth from "@middlewares/auth";
 
 const productsRouter = Router();
 const productsController = new ProductsController();
 
-productsRouter.get("/", productsController.index);
+productsRouter.use(auth);
 
+productsRouter.get("/", productsController.index);
 productsRouter.get(
     "/:id",
     celebrate({
@@ -14,7 +16,6 @@ productsRouter.get(
     }),
     productsController.show,
 );
-
 productsRouter.post(
     "/",
     celebrate({
@@ -26,7 +27,6 @@ productsRouter.post(
     }),
     productsController.create,
 );
-
 productsRouter.put(
     "/:id",
     celebrate({
@@ -39,7 +39,6 @@ productsRouter.put(
     }),
     productsController.update,
 );
-
 productsRouter.delete(
     "/:id",
     celebrate({
