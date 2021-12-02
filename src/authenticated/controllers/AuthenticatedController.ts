@@ -1,3 +1,4 @@
+import { classToClass } from "class-transformer";
 import { Request, Response } from "express";
 import AuthenticatedService from "../services/AuthenticatedService";
 
@@ -6,7 +7,7 @@ class AuthenticatedController {
         const { email, password } = req.body;
         const auth = new AuthenticatedService();
         const user = await auth.init({ email, password });
-        return res.json(user);
+        return res.json(classToClass(user));
     }
 }
 

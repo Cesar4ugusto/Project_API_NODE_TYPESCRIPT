@@ -6,7 +6,6 @@ class ListUserstService {
     public async init(): Promise<User[]> {
         const userRepository = getCustomRepository(UsersRepository);
         const user = await userRepository.find();
-
         return user;
     }
 }

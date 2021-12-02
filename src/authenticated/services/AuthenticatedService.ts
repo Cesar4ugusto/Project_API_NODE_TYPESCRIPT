@@ -31,7 +31,7 @@ class AuthenticatedService {
             throw new AppError("Password incorrect!", 401);
         }
 
-        const token = jwt.sign({}, authConfig.jwt.secret, {
+        const token = jwt.sign({}, authConfig.jwt.secret as jwt.Secret, {
             subject: user.id,
             expiresIn: authConfig.jwt.expiresIn,
         });

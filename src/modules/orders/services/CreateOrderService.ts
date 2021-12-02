@@ -36,24 +36,24 @@ class CreateOrderService {
         const checkNonexistentProducts = products.filter(
             product => !productsExistsIds.includes(product.id),
         );
-        if (!checkNonexistentProducts.length) {
-            throw new AppError(`Could not find any product ${checkNonexistentProducts[0]}`);
+        if (checkNonexistentProducts.length) {
+            throw new AppError(`Could not find any product ${checkNonexistentProducts[0].id}`);
         }
 
         const quantityAvailble = products.filter(
             product =>
                 productsExists.filter(p => p.id === product.id)[0].quantity < product.quantity,
         );
-        if (!quantityAvailble.length) {
+        if (quantityAvailble.length) {
             throw new AppError(
                 `The quantity ${quantityAvailble[0].quantity} is not available for ${quantityAvailble[0].id}`,
             );
         }
 
-        const serializedProducts = products.map(products => ({
-            product_id: products.id,
-            quantity: products.quantity,
-            price: productsExists.filter(p => p.id)[0].price,
+        const serializedProducts = products.map(product => ({
+            product_id: product.id,
+            quantity: product.quantity,
+            price: productsExists.filter(p => p.id === product.id)[0].price,
         }));
 
         const order = await orderRepository.generate({
