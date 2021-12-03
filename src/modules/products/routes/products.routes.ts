@@ -6,7 +6,7 @@ import auth from "@middlewares/auth";
 const productsRouter = Router();
 const productsController = new ProductsController();
 
-// productsRouter.use(auth);
+productsRouter.use(auth);
 
 productsRouter.get("/", productsController.index);
 productsRouter.get(

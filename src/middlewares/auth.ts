@@ -26,7 +26,7 @@ export default function auth(req: Request, res: Response, next: NextFunction): v
     }
 
     try {
-        const verify = jwt.verify(token, authConfig.jwt.secret);
+        const verify = jwt.verify(token, authConfig.jwt.secret as jwt.Secret);
         const { sub } = verify as ITokenPayload;
 
         req.user = {
