@@ -1,3 +1,4 @@
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import Product from "../typeorm/entities/Product";
@@ -14,6 +15,7 @@ class UpdateteProductService {
     public async init({ id, name, price, quantity }: IRequest): Promise<Product> {
         const productsRepository = getCustomRepository(ProductsRepository);
         const product = await productsRepository.findOne(id);
+        const redisCache = new RedisCache();
 
         if (!product) {
             throw new AppError("Product not fond!");
@@ -28,6 +30,8 @@ class UpdateteProductService {
         product.name = name;
         product.price = price;
         product.quantity = quantity;
+
+        await redisCache.invalidate("api-vendas-PRODUCT_LIST");
 
         await productsRepository.save(product);
 

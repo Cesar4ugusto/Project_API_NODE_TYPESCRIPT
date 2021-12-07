@@ -9,11 +9,13 @@ import AppError from "@shared/errors/AppError";
 import { errors } from "celebrate";
 import multerConfig from "@config/multerConfig";
 import { pagination } from "typeorm-pagination";
+import rateLimiter from "@middlewares/rateLimiter";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(rateLimiter);
 app.use(pagination);
 app.use("/files", express.static(multerConfig.dest));
 app.use(routes);
